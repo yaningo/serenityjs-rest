@@ -11,9 +11,7 @@ Feature: DEMO_RESTAPI
     James wants to create a new message
     When he wants to create a new message with author <author> and message <message>
     Then he is able to create the new message
-    Examples:
-      | author | message | 
-      | J.R.R. Tolkien | The Lord of the Rings | 
+    
 
     
   
