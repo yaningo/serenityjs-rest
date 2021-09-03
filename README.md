@@ -1,6 +1,7 @@
 # Serenity/JS Cucumber API Testing
 
 Issue:
+```
 When he wants to create a new message with author J.R.R. Tolkien and message The Lord of the Rings
 [test:execute]     ☕ImplementationPendingError: Step implementation missing:
 [test:execute] 
@@ -26,3 +27,4 @@ When he wants to create a new message with author J.R.R. Tolkien and message The
 [test:execute] Total time: 56ms
 [test:execute] Scenarios:  1
 [test:execute] ===========================================================================
+```
