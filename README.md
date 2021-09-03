@@ -28,3 +28,11 @@ When he wants to create a new message with author J.R.R. Tolkien and message The
 [test:execute] Scenarios:  1
 [test:execute] ===========================================================================
 ```
+
+Fix:
+```
+  Examples:
+      | author | message | 
+      | "J.R.R. Tolkien" | "The Lord of the Rings" | 
+
+```
