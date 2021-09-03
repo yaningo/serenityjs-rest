@@ -1,4 +1,4 @@
-# Serenity/JS Cucumber Template
+# Serenity/JS Cucumber API Testing
 
 Issue:
 When he wants to create a new message with author J.R.R. Tolkien and message The Lord of the Rings
