@@ -36,3 +36,8 @@ Fix:
       | "J.R.R. Tolkien" | "The Lord of the Rings" | 
 
 ```
+
+Note
+```
+https://cucumber.io/docs/cucumber/cucumber-expressions/#parameter-types
+```
