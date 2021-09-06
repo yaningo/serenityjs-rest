@@ -41,3 +41,14 @@ Note
 ```
 https://cucumber.io/docs/cucumber/cucumber-expressions/#parameter-types
 ```
+
+Issue #2
+```
+test:execute]     ✗ James ensures that a Promise does equal 'Curry Blake' (1ms)
+[test:execute] 
+[test:execute]       Difference (+ expected, - actual):
+[test:execute] 
+[test:execute]       - a Promise
+[test:execute]       + 'Curry Blake'
+[test:execute] 
+```

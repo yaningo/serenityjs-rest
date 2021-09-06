@@ -23,12 +23,12 @@
     "cucumber",
     "testing"
   ],
-  "author": "Jan Molak <jan.molak@serenity.io>",
+  "author": "LayMui",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/serenity-js/serenity-js-cucumber-template/issues"
+    "url": "https://github.com/serenityjs-rest/issues"
   },
-  "homepage": "http://serenity-js.org",
+  "homepage": "",
   "engines": {
     "node": "^12 || ^14 || ^16",
     "npm": "^6 || ^7"
