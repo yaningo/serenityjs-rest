@@ -15,7 +15,7 @@ Feature: DEMO_RESTAPI
       | author | message | 
       | "Curry Blake" | "Speaking in tongue" | 
      
-  
+@test  
   Scenario: get a single message 
     In order to get a single message
     As a API developer James
@@ -31,7 +31,6 @@ Feature: DEMO_RESTAPI
     When he view all messages
     Then he is able to view all the messages
 
-
  Scenario Outline: update a message 
     In order to update a message
     As a API developer James
@@ -43,7 +42,7 @@ Feature: DEMO_RESTAPI
       | author                |    message       | 
       | "john smart ferguson" |  "BDD in Action" |  
 
-@test
+
   Scenario Outline: delete a message 
     In order to delete a message
     As a API developer James

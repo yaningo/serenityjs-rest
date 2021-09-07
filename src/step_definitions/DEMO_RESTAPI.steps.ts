@@ -32,7 +32,7 @@ actor.attemptsTo(
 
 When('{pronoun} want to get a single message', (actor: Actor) => 
 actor.attemptsTo(
-    Send.a(GetRequest.to('/taqelah/messages/2')),
+    ToPerform.getSingleMessage(),
     Log.the(LastResponse.body()),
 ));
 
@@ -56,8 +56,9 @@ actor.attemptsTo(
 
 When('{pronoun} update a message with author {string} and {string}', (actor: Actor, author: string, message: string) =>
     actor.attemptsTo(
-        Send.a(PutRequest.to('/taqelah/messages/2').with({ author: author, message: message })),
-        Log.the(LastResponse.body()),
+        ToPerform.updateMessage(author, message),
+       // Send.a(PutRequest.to('/taqelah/messages/2').with({ author: author, message: message })),
+     //   Log.the(LastResponse.body()),
     ));
 
 
