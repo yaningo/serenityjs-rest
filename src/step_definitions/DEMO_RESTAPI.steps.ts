@@ -3,6 +3,7 @@ import { and, Ensure, equals } from '@serenity-js/assertions';
 import { Actor, List, Log, Property } from '@serenity-js/core';
 import { CallAnApi, DeleteRequest, GetRequest, LastResponse, PostRequest, PutRequest, Send } from '@serenity-js/rest';
 import MessageDto from '../dto/messageDto';
+import { ToPerform } from '../task/ToPerform';
 
 
 Given('{actor} is at the base url', (actor: Actor) =>
@@ -68,8 +69,8 @@ actor.attemptsTo(
    
 When('{pronoun} delete a message {string}', (actor: Actor, message: string) =>
     actor.attemptsTo(
-        Send.a(DeleteRequest.to('/taqelah/messages/' + message)),
-        Log.the(LastResponse.body()),
+        ToPerform​​.deleteMessage(message),
+       // Send.a(DeleteRequest.to('/taqelah/messages/' + message)),
     ));
 
 Then('{pronoun} is able to delete the message', (actor: Actor) =>

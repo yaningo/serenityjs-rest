@@ -8,7 +8,6 @@ Feature: DEMO_RESTAPI
 
   Rule: create new message
   
-  @test
   Scenario Outline: create a new message 
     When he wants to create a new message with author <author> and message <message>
     Then he is able to create the new message author <author> and message <message>
