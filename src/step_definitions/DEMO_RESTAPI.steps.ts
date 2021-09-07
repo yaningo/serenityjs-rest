@@ -44,7 +44,7 @@ actor.attemptsTo(
 
 When('{pronoun} view all messages', (actor: Actor) => 
 actor.attemptsTo(
-    Send.a(GetRequest.to('/taqelah/messages')),
+   ToPerform.viewAllMessage(),
     Log.the(LastResponse.body()),
 ));
 

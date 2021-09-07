@@ -24,6 +24,7 @@ Feature: DEMO_RESTAPI
     Then he is able to get a single message
 
 
+@test
   Scenario: get all messages 
     In order to view all messages 
     As a API developer James
@@ -31,6 +32,7 @@ Feature: DEMO_RESTAPI
     When he view all messages
     Then he is able to view all the messages
 
+@test
  Scenario Outline: update a message 
     In order to update a message
     As a API developer James
@@ -42,7 +44,7 @@ Feature: DEMO_RESTAPI
       | author                |    message       | 
       | "john smart ferguson" |  "BDD in Action" |  
 
-
+@test
   Scenario Outline: delete a message 
     In order to delete a message
     As a API developer James
