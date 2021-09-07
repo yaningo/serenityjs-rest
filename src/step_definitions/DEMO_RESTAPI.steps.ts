@@ -1,34 +1,30 @@
 import { DataTable, Given, Then, When } from '@cucumber/cucumber';
-import { Ensure, equals, property } from '@serenity-js/assertions';
-import { Actor, Log, Property } from '@serenity-js/core';
-import { GetRequest, LastResponse, PostRequest, Send } from '@serenity-js/rest';
+import { and, Ensure, equals } from '@serenity-js/assertions';
+import { Actor, List, Log, Property } from '@serenity-js/core';
+import { CallAnApi, GetRequest, LastResponse, PostRequest, Send } from '@serenity-js/rest';
 import MessageDto from '../dto/messageDto';
 
 
 Given('{actor} is at the base url', (actor: Actor) =>
-//actor.whoCan(
-  //  CallAnApi.at('http://localhost:8080/webapp'),
-    actor.attemptsTo(
-        Log.the('base url'),
-     ));
+actor.whoCan(
+    CallAnApi.at('http://localhost:8080/webapp'),
+    // actor.attemptsTo(
+    //     Log.the('base url'),
+      ));
 
 
 When('{pronoun} wants to create a new message with author {string} and message {string}', (actor: Actor, author: string, message: string) =>
     actor.attemptsTo(
         Send.a(PostRequest.to('/taqelah/messages/').with({ author: author, message: message })),
-       // Log.the(LastResponse.body()),
+        Log.the(LastResponse.body()),
     ));
 
 Then('{pronoun} is able to create the new message author {string} and message {string}', (actor: Actor, author: string, message: string) =>
 actor.attemptsTo(
     Ensure.that(LastResponse.status(), equals(201)),
+    Log.the(author),
     Ensure.that(
-        Property.of(LastResponse.body<MessageDto>()).author,
-        equals(author),
-    ),
-    Ensure.that(
-        Property.of(LastResponse.body<MessageDto>()).message,
-        equals(message),
+        Property.of(LastResponse.body<MessageDto>()).author, equals(author)
     )
 ));
 
