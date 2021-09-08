@@ -1,5 +1,5 @@
 import { DataTable, Given, Then, When } from '@cucumber/cucumber';
-import { and, Ensure, equals } from '@serenity-js/assertions';
+import { and, Ensure, equals, matches } from '@serenity-js/assertions';
 import { Actor, List, Log, Property } from '@serenity-js/core';
 import { CallAnApi, DeleteRequest, GetRequest, LastResponse, PostRequest, PutRequest, Send } from '@serenity-js/rest';
 import MessageDto from '../dto/messageDto';
@@ -9,8 +9,6 @@ import { ToPerform } from '../task/ToPerform';
 Given('{actor} is at the base url', (actor: Actor) =>
 actor.whoCan(
     CallAnApi.at('http://localhost:8080/webapp'),
-    // actor.attemptsTo(
-    //     Log.the('base url'),
       ));
 
 
@@ -20,13 +18,20 @@ When('{pronoun} wants to create a new message with author {string} and message {
         Log.the(LastResponse.body()),
     ));
 
-Then('{pronoun} is able to create the new message author {string} and message {string}', (actor: Actor, author: string, message: string) =>
+Then('{pronoun} is able to create the new message author {string} and message {string}', 
+    (actor: Actor, author: string, message: string) =>
 actor.attemptsTo(
     Ensure.that(LastResponse.status(), equals(201)),
     Log.the(author),
+    Log.the(message),
     Ensure.that(
         Property.of(LastResponse.body<MessageDto>()).author, equals(author)
+    ),
+
+    Ensure.that(
+        Property.of(LastResponse.body<MessageDto>()).message, equals(message)
     )
+        
 ));
 
 
@@ -70,7 +75,7 @@ actor.attemptsTo(
    
 When('{pronoun} delete a message {string}', (actor: Actor, message: string) =>
     actor.attemptsTo(
-        ToPerform​​.deleteMessage(message),
+        ToPerform.deleteMessage(message),
        // Send.a(DeleteRequest.to('/taqelah/messages/' + message)),
     ));
 
