@@ -2,6 +2,7 @@ import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { and, Ensure, equals, matches } from '@serenity-js/assertions';
 import { Actor, List, Log, Property } from '@serenity-js/core';
 import { CallAnApi, DeleteRequest, GetRequest, LastResponse, PostRequest, PutRequest, Send } from '@serenity-js/rest';
+import { MatcherRule } from 'tiny-types/lib/pattern-matching/rules';
 import MessageDto from '../dto/messageDto';
 import { ToPerform } from '../task/ToPerform';
 
@@ -26,6 +27,10 @@ actor.attemptsTo(
    
     Ensure.that(
         await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor), equals(author)
+    ),
+
+    Ensure.that(
+        await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor), matches(/[a-z]*/)
     ),
 
     Ensure.that(
