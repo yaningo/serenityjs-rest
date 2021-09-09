@@ -52,3 +52,12 @@ test:execute]     ✗ James ensures that a Promise does equal 'Curry Blake' (1ms
 [test:execute]       + 'Curry Blake'
 [test:execute] 
 ```
+
+try with 
+ Log.the(Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor)),
+ get back:
+ ```
+ ✓ James logs: a Promise (0ms)
+[test:execute]       a Promise:
+[test:execute]       'Curry Blake'
+```
