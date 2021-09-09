@@ -22,13 +22,15 @@ Then('{pronoun} is able to create the new message author {string} and message {s
     async (actor: Actor, author: string, message: string) =>
 actor.attemptsTo(
     Ensure.that(LastResponse.status(), equals(201)),
-    //Log.the(Property.of(LastResponse.body<MessageDto>()).author),
-   
     Log.the(await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor)),
    
-    // Ensure.that(
-    //     Property.of(LastResponse.body<MessageDto>()).message, equals(message)
-    // )
+    Ensure.that(
+        await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor), equals(author)
+    ),
+
+    Ensure.that(
+        await Property.of(LastResponse.body<MessageDto>()).message.answeredBy(actor), equals(message)
+    )
         
 ));
 
