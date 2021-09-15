@@ -1,4 +1,4 @@
-import { Actor, Cast } from '@serenity-js/core';
+import { Actor, Cast, TakeNotes } from '@serenity-js/core';
 import { CallAnApi } from '@serenity-js/rest';
 import { ensure, isNotBlank } from 'tiny-types';
 
@@ -9,8 +9,9 @@ export class Actors implements Cast {
 
     prepare(actor: Actor): Actor {
         return actor;
-        // return actor.whoCan(
-        //     CallAnApi.at(this.baseApiUrl),
-        // );
+        return actor.whoCan(
+            CallAnApi.at(this.baseApiUrl),
+            TakeNotes.usingAnEmptyNotepad
+        );
     }
 }

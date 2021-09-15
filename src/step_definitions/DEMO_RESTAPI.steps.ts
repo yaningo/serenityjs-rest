@@ -1,10 +1,11 @@
 import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { and, Ensure, equals, matches } from '@serenity-js/assertions';
-import { Actor, List, Log, Property, TakeNote, TakeNotes } from '@serenity-js/core';
+import { Actor, List, Log, Property, Question, TakeNote, TakeNotes } from '@serenity-js/core';
 import { CallAnApi, DeleteRequest, GetRequest, LastResponse, PostRequest, PutRequest, Send } from '@serenity-js/rest';
 import { MatcherRule } from 'tiny-types/lib/pattern-matching/rules';
 import MessageDto from '../dto/messageDto';
 import { ToPerform } from '../task/ToPerform';
+import { Note, q } from '@serenity-js/core/lib/screenplay/questions'
 
 
 Given('{actor} is at the base url', (actor: Actor) =>
@@ -16,14 +17,18 @@ actor.whoCan(
 
 When('{pronoun} wants to create a new message with author {string} and message {string}', (actor: Actor, author: string, message: string) =>
     actor.attemptsTo(
-     //   TakeNote.of(author).as('author'),
+        
+        TakeNote.of(q`$(author)`).as('author'),
+        TakeNote.of(q`$(message)`).as('message'),
         Send.a(PostRequest.to('/taqelah/messages/').with({ author: author, message: message })),
         Log.the(LastResponse.body()),
     ));
 
 Then('{pronoun} is able to create the new message author {string} and message {string}', 
     async (actor: Actor, author: string, message: string) =>
+   
 actor.attemptsTo(
+    Log.the(Note.of('author')),
     Ensure.that(LastResponse.status(), equals(201)),
     Log.the(await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor)),
    
@@ -90,4 +95,8 @@ Then('{pronoun} is able to delete the message', (actor: Actor) =>
     actor.attemptsTo(
         Ensure.that(LastResponse.status(), equals(200)),
     ));
+
+function q$(q$: any, arg1: { author: string; }) {
+    throw new Error('Function not implemented.');
+}
     
