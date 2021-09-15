@@ -61,3 +61,5 @@ try with
 [test:execute]       a Promise:
 [test:execute]       'Curry Blake'
 ```
+
+How to share state between steps?

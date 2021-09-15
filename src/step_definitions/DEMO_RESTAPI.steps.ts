@@ -1,6 +1,6 @@
 import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { and, Ensure, equals, matches } from '@serenity-js/assertions';
-import { Actor, List, Log, Property } from '@serenity-js/core';
+import { Actor, List, Log, Property, TakeNote, TakeNotes } from '@serenity-js/core';
 import { CallAnApi, DeleteRequest, GetRequest, LastResponse, PostRequest, PutRequest, Send } from '@serenity-js/rest';
 import { MatcherRule } from 'tiny-types/lib/pattern-matching/rules';
 import MessageDto from '../dto/messageDto';
@@ -10,11 +10,13 @@ import { ToPerform } from '../task/ToPerform';
 Given('{actor} is at the base url', (actor: Actor) =>
 actor.whoCan(
     CallAnApi.at('http://localhost:8080/webapp'),
+    TakeNotes.usingAnEmptyNotepad,
       ));
 
 
 When('{pronoun} wants to create a new message with author {string} and message {string}', (actor: Actor, author: string, message: string) =>
     actor.attemptsTo(
+     //   TakeNote.of(author).as('author'),
         Send.a(PostRequest.to('/taqelah/messages/').with({ author: author, message: message })),
         Log.the(LastResponse.body()),
     ));
