@@ -9,10 +9,12 @@ import { Note, q } from '@serenity-js/core/lib/screenplay/questions'
 
 
 Given('{actor} is at the base url', (actor: Actor) =>
-actor.whoCan(
-    CallAnApi.at('http://localhost:8080/webapp'),
-    TakeNotes.usingAnEmptyNotepad,
-      ));
+actor.attemptsTo(
+    Log.the("base url"),
+  //  CallAnApi.at('http://localhost:8080/webapp'),
+   //  TakeNotes.usingAnEmptyNotepad,
+    ));
+
 
 
 When('{pronoun} wants to create a new message with author {string} and message {string}', (actor: Actor, author: string, message: string) =>
@@ -29,6 +31,7 @@ Then('{pronoun} is able to create the new message author {string} and message {s
    
 actor.attemptsTo(
     Log.the(Note.of('author')),
+    Log.the(Note.of('message')),
     Ensure.that(LastResponse.status(), equals(201)),
     Log.the(await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor)),
    

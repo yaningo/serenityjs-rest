@@ -63,3 +63,6 @@ try with
 ```
 
 How to share state between steps?
+Using TakeNotes
+
+ ConfigurationError: James can't TakeNotes yet. Did you give them the ability to do so?
