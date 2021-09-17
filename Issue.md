@@ -80,3 +80,12 @@ Log.the(Note.of(q`$(author)`)),
 ```  
 both does not work
 
+Fix:
+  TakeNote.of(
+        Question.about<string>(`Author`, actor => {
+          return author; // Actual value
+        })
+      ).as('Author'),
+
+
+  Log.the(Note.of('Author')),

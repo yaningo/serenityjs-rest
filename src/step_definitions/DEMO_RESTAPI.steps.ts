@@ -1,6 +1,6 @@
 import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { and, Ensure, equals, matches } from '@serenity-js/assertions';
-import { Actor, Log, Property, TakeNote}  from '@serenity-js/core';
+import { Actor, Log, Property, Question, TakeNote}  from '@serenity-js/core';
 import { LastResponse, PostRequest, PutRequest, Send } from '@serenity-js/rest';
 import MessageDto from '../dto/messageDto';
 import { ToPerform } from '../task/ToPerform';
@@ -15,8 +15,11 @@ actor.attemptsTo(
 When('{pronoun} wants to create a new message with author {string} and message {string}', (actor: Actor, author: string, message: string) =>
     actor.attemptsTo(
         
-        TakeNote.of(q`$(author)`).as('author'),
-        TakeNote.of(q`$(message)`).as('message'),
+        TakeNote.of(
+            Question.about<string>(`Author`, actor => {
+              return author; // Actual value
+            })
+          ).as('Author'),
         Send.a(PostRequest.to('/taqelah/messages/').with({ author: author, message: message })),
         Log.the(LastResponse.body()),
     ));
@@ -25,13 +28,13 @@ Then('{pronoun} is able to create the new message author {string} and message {s
     async (actor: Actor, author: string, message: string) =>
    
 actor.attemptsTo(
-    Log.the(Note.of('author')),
-    Log.the(Note.of(q`$(author)`)),
+  //  Log.the(Note.of('author')),
+    Log.the(Note.of('Author')),
     Ensure.that(LastResponse.status(), equals(201)),
     Log.the(await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor)),
    
     Ensure.that(
-        await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor), equals(author)
+        await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor), equals(Note.of('Author'))
     ),
 
     Ensure.that(
@@ -72,8 +75,6 @@ actor.attemptsTo(
 When('{pronoun} update a message with author {string} and {string}', (actor: Actor, author: string, message: string) =>
     actor.attemptsTo(
         ToPerform.updateMessage(author, message),
-       // Send.a(PutRequest.to('/taqelah/messages/2').with({ author: author, message: message })),
-     //   Log.the(LastResponse.body()),
     ));
 
 
