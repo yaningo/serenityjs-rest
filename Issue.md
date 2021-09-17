@@ -66,3 +66,17 @@ How to share state between steps?
 Using TakeNotes
 
  ConfigurationError: James can't TakeNotes yet. Did you give them the ability to do so?
+
+  
+  Fix: 
+  TakeNotes.usingAnEmptyNotepad()
+
+The usingAnEmptyNotepad is a function!
+
+Note.of to retrieve the data "author" does not work
+```
+Log.the(Note.of('author')),
+Log.the(Note.of(q`$(author)`)), 
+```  
+both does not work
+
