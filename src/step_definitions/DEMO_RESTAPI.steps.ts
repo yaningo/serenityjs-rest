@@ -21,7 +21,7 @@ When('{pronoun} wants to create a new message with author {string} and message {
             })
           ).as('Author'),
         Send.a(PostRequest.to('/taqelah/messages/').with({ author: author, message: message })),
-        Log.the(LastResponse.body()),
+     //   Log.the(LastResponse.body()),
     ));
 
 Then('{pronoun} is able to create the new message author {string} and message {string}', 
@@ -29,12 +29,12 @@ Then('{pronoun} is able to create the new message author {string} and message {s
    
 actor.attemptsTo(
   //  Log.the(Note.of('author')),
-    Log.the(Note.of('Author')),
+    Log.the(Note.of('Author').answeredBy(actor)),
     Ensure.that(LastResponse.status(), equals(201)),
     Log.the(await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor)),
    
     Ensure.that(
-        await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor), equals(Note.of('Author'))
+        await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor), equals(author)
     ),
 
     Ensure.that(
