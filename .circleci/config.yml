@@ -7,8 +7,12 @@ jobs:
       - checkout
      
       - run:
-          name: Run test on docker at port 3000
-          command: docker-compose up -d
+          name: Install dependencies 
+          command: npm install
+
+      - run:
+          name: Run test  
+          command: npm run test
 
       - store_test_results:
           path: target/site/serenity
