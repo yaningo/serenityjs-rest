@@ -1,0 +1,20 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+     
+      - run:
+          name: Run test on docker at port 3000
+          command: docker-compose up -d
+
+      - store_test_results:
+          path: target/site/serenity
+     
+      - store_artifacts:
+          path: target/site/serenity
+          destination: .
+      - store_artifacts:
+          path: ./index.html

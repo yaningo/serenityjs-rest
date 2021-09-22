@@ -22,6 +22,7 @@ When('{pronoun} wants to create a new message with author {string} and message {
           ).as('Author'),
         Send.a(PostRequest.to('/taqelah/messages/').with({ author: author, message: message })),
      //   Log.the(LastResponse.body()),
+    // Log.the(Note.of('Author').answeredBy(actor)),
     ));
 
 Then('{pronoun} is able to create the new message author {string} and message {string}', 

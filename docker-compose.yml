@@ -1,0 +1,15 @@
+version: '3'
+services:
+  serenityjs-rest:
+    # Path to dockerfile.
+    # '.' represents the current directory in which
+    # docker-compose.yml is present.
+    build: .
+
+    # Mapping of container port to host
+   
+    ports:
+      - "3000:3000"
+    # Mount volume
+    volumes:
+      - "$PWD:/app"
