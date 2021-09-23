@@ -2,7 +2,7 @@ import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { and, Ensure, equals, matches } from '@serenity-js/assertions';
 import { Actor, Log, Property, Question, TakeNote}  from '@serenity-js/core';
 import { LastResponse, PostRequest, PutRequest, Send } from '@serenity-js/rest';
-import MessageDto from '../dto/messageDto';
+import { MessageDto } from '../dto/messageDto';
 import { ToPerform } from '../task/ToPerform';
 import { Note, q } from '@serenity-js/core/lib/screenplay/questions'
 
