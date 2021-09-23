@@ -5,15 +5,18 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
      
       - run:
           name: Install dependencies 
           command: npm install
-
-      - run:
-          name: Install typescript
-          command: npm install typescript -g
-
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
       - run:
           name: Install dependencies 
           command: npm run postinstall
@@ -29,4 +32,4 @@ jobs:
           path: target/site/serenity
           destination: .
       - store_artifacts:
-          path: ./index.html
+          path: ./*
