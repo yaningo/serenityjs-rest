@@ -11,6 +11,10 @@ jobs:
           command: npm install
 
       - run:
+          name: Install typescript
+          command: npm install typescript -g
+
+      - run:
           name: Install dependencies 
           command: npm run postinstall
       
