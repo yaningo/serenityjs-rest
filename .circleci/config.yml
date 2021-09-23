@@ -9,10 +9,14 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-     
+      - run:
+          name: remove node_modules
+          command: rm -fr node_modules
+      
       - run:
           name: Install dependencies 
           command: npm install
+      
       - save_cache:
           key: v1-dependencies-{{ checksum "package.json" }}
           paths:
