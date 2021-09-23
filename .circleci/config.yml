@@ -25,11 +25,19 @@ jobs:
       # - run:
       #     name: Run test  
       #     command: npm run test
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
 
 
       - run:
           name: Run test on docker at port 3000
-          command: docker-compose up -d
+          command: |
+            set -x 
+            docker-compose up -d
 
       - store_test_results:
           path: target/site/serenity
@@ -39,3 +47,7 @@ jobs:
           destination: .
       - store_artifacts:
           path: ./*
+      - persist_to_workspace:
+          root: .
+          paths:
+            - Dockerfile
