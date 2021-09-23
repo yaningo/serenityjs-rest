@@ -2,32 +2,34 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:latest
+      - image: cimg/base:2021.04
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run:
-          name: remove node_modules
-          command: rm -fr node_modules
       
-      - run:
-          name: Install dependencies 
-          command: npm install
+      # - restore_cache:
+      #     keys:
+      #       - v1-dependencies-{{ checksum "package.json" }}
+      #       - v1-dependencies-
+      # - run:
+      #     name: Install dependencies 
+      #     command: npm install
       
-      - save_cache:
-          key: v1-dependencies-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Install dependencies 
-          command: npm run postinstall
+      # - save_cache:
+      #     key: v1-dependencies-{{ checksum "package.json" }}
+      #     paths:
+      #       - node_modules
+      # - run:
+      #     name: Install dependencies 
+      #     command: npm run postinstall
       
+      # - run:
+      #     name: Run test  
+      #     command: npm run test
+
+
       - run:
-          name: Run test  
-          command: npm run test
+          name: Run test on docker at port 3000
+          command: docker-compose up -d
 
       - store_test_results:
           path: target/site/serenity
