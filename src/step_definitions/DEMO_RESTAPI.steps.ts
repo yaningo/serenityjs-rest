@@ -2,9 +2,11 @@ import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { and, Ensure, equals, matches } from '@serenity-js/assertions';
 import { Actor, Log, Property, Question, TakeNote}  from '@serenity-js/core';
 import { LastResponse, PostRequest, PutRequest, Send } from '@serenity-js/rest';
-import { MessageDto } from '../dto/messageDto';
+
 import { ToPerform } from '../task/ToPerform';
 import { Note, q } from '@serenity-js/core/lib/screenplay/questions'
+import MessageDto from '../dto/MessageDto';
+const uuid = require("uuid")
 
 
 Given('{actor} is at the base url', (actor: Actor) =>
@@ -21,32 +23,29 @@ When('{pronoun} wants to create a new message with author {string} and message {
             })
           ).as('Author'),
         Send.a(PostRequest.to('/taqelah/messages/').with({ author: author, message: message })),
-     //   Log.the(LastResponse.body()),
-    // Log.the(Note.of('Author').answeredBy(actor)),
     ));
 
 Then('{pronoun} is able to create the new message author {string} and message {string}', 
-    async (actor: Actor, author: string, message: string) =>
-   
-actor.attemptsTo(
-  //  Log.the(Note.of('author')),
-    Log.the(Note.of('Author').answeredBy(actor)),
+    async (actor: Actor, author: string, message: string) => {
+    const iAuthor = await Note.of('Author').answeredBy(actor);
+    await actor.attemptsTo(
+    Log.the('AUTHOR: ' + iAuthor),
+  
     Ensure.that(LastResponse.status(), equals(201)),
-    Log.the(await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor)),
-   
+    
     Ensure.that(
-        await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor), equals(author)
+        Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor), equals(author)
     ),
 
     Ensure.that(
-        await Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor), matches(/[a-z]*/)
+        Property.of(LastResponse.body<MessageDto>()).author.answeredBy(actor), matches(/[a-z]*/)
     ),
 
     Ensure.that(
-        await Property.of(LastResponse.body<MessageDto>()).message.answeredBy(actor), equals(message)
+         Property.of(LastResponse.body<MessageDto>()).message.answeredBy(actor), equals(message)
     )
         
-));
+)});
 
 
 When('{pronoun} want to get a single message', (actor: Actor) => 
