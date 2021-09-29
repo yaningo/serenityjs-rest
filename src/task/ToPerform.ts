@@ -1,7 +1,17 @@
 import { Task } from "@serenity-js/core";
-import { DeleteRequest, GetRequest, PutRequest, Send } from "@serenity-js/rest";
+import { DeleteRequest, GetRequest, PostRequest, PutRequest, Send } from "@serenity-js/rest";
 
 export const ToPerform = {
+
+    createMessage: (author: string, message: string) => 
+    //const firstName = author.split(" ")
+        Task.where(`#actor create author ${author} message ${ message }`,
+        Send.a(PostRequest.to('/taqelah/messages/').with({ author: author, message: message })),
+    
+    ),
+    
+    
+
     deleteMessage: (message: string) =>
     Task.where(`#actor delete message ${ message }`,
         Send.a(DeleteRequest.to('/taqelah/messages/' + message)),

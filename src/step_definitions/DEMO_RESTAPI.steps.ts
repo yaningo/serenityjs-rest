@@ -1,7 +1,7 @@
 import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { and, Ensure, equals, matches } from '@serenity-js/assertions';
 import { Actor, Log, Property, Question, TakeNote}  from '@serenity-js/core';
-import { LastResponse, PostRequest, PutRequest, Send } from '@serenity-js/rest';
+import { ChangeApiConfig, LastResponse, PostRequest, PutRequest, Send } from '@serenity-js/rest';
 
 import { ToPerform } from '../task/ToPerform';
 import { Note, q } from '@serenity-js/core/lib/screenplay/questions'
@@ -11,7 +11,7 @@ const uuid = require("uuid")
 
 Given('{actor} is at the base url', (actor: Actor) =>
 actor.attemptsTo(
-    Log.the("base url"),
+   ChangeApiConfig.setUrlTo('http://localhost:8080/webapp')
 ))
 
 When('{pronoun} wants to create a new message with author {string} and message {string}', (actor: Actor, author: string, message: string) =>
@@ -22,7 +22,8 @@ When('{pronoun} wants to create a new message with author {string} and message {
               return author; // Actual value
             })
           ).as('Author'),
-        Send.a(PostRequest.to('/taqelah/messages/').with({ author: author, message: message })),
+          ToPerform.createMessage(author, message)
+        //Send.a(PostRequest.to('/taqelah/messages/').with({ author: author, message: message })),
     ));
 
 Then('{pronoun} is able to create the new message author {string} and message {string}', 
