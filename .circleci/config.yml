@@ -1,8 +1,9 @@
 version: 2.1
 jobs:
-  build:
+  integrationtest:
     docker:
       - image: cimg/base:2021.04
+    working_directory: ~/repo
     steps:
       - checkout
       
@@ -38,3 +39,12 @@ jobs:
           root: .
           paths:
             - package.json
+
+orbs:
+  aws-s3: circleci/aws-s3@2.0.0
+
+workflows:
+  version: 2
+  integrationtest:
+    jobs:
+      - integrationtest
