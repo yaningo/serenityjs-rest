@@ -6,48 +6,35 @@ jobs:
     steps:
       - checkout
       
-      # - restore_cache:
-      #     keys:
-      #       - v1-dependencies-{{ checksum "package.json" }}
-      #       - v1-dependencies-
-      # - run:
-      #     name: Install dependencies 
-      #     command: npm install
-      
-      # - save_cache:
-      #     key: v1-dependencies-{{ checksum "package.json" }}
-      #     paths:
-      #       - node_modules
-      # - run:
-      #     name: Install dependencies 
-      #     command: npm run postinstall
-      
-      # - run:
-      #     name: Run test  
-      #     command: npm run test
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run:
-          name: Install Docker Compose
-          command: |
-            set -x
-            curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-            chmod +x /usr/local/bin/docker-compose
-
-
+          name: Install dependencies 
+          command: npm install
+      
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
       - run:
-          name: Run test on docker at port 3000
-          command: |
-            set -x 
-            docker-compose up -d
-
-      - store_test_results:
-          path: target/site/serenity
+          name: Install dependencies 
+          command: npm run postinstall
+      
+      - run:
+          name: Run test  
+          command: npm run test
      
-      - store_artifacts:
-          path: target/site/serenity
-          destination: .
-      - store_artifacts:
-          path: ./*
+      - store_test_results:
+          path: target
+
+      # host latest report in AWS S3
+      - aws-s3/copy:
+          arguments: '--recursive --acl public-read-write'
+          from: target/site/serenity
+          to: 's3://serenitybdd'
       - persist_to_workspace:
           root: .
           paths:
-            - Dockerfile
+            - package.json
