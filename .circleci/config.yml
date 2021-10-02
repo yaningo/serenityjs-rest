@@ -2,25 +2,26 @@ version: 2.1
 jobs:
   integrationtest:
     docker:
-      - image: cimg/openjdk:14.0
+      - image: cimg/openjdk:1.14-node
     working_directory: ~/repo
     steps:
       - checkout
       - run: java --version
+      - run: node --version
       
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
 
-      - run:
-          name: "Update Node.js and npm"
-          command: |
-            curl -sSL "https://nodejs.org/dist/v11.10.0/node-v11.10.0-linux-x64.tar.xz" | sudo tar --strip-components=2 -xJ -C /usr/local/bin/ node-v11.10.0-linux-x64/bin/node
-            curl https://www.npmjs.com/install.sh | sudo bash
-      - run:
-          name: Check current version of node
-          command: node -v
+      # - run:
+      #     name: "Update Node.js and npm"
+      #     command: |
+      #       curl -sSL "https://nodejs.org/dist/v11.10.0/node-v11.10.0-linux-x64.tar.xz" | sudo tar --strip-components=2 -xJ -C /usr/local/bin/ node-v11.10.0-linux-x64/bin/node
+      #       curl https://www.npmjs.com/install.sh | sudo bash
+      #  - run:
+      #     name: Check current version of node
+      #     command: node -v
 
 
       - run:
