@@ -2,28 +2,15 @@ version: 2.1
 jobs:
   integrationtest:
     docker:
-      - image: circleci/openjdk:latest
+      - image: timbru31/java-node:latest
     working_directory: ~/repo
     steps:
-      - checkout
-      - run: java --version
-
-      
+      - build-tools/install-ci-tools
+      - checkout      
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-
-      - run:
-          name: "Update Node.js and npm"
-          command: |
-            curl -sSL "https://nodejs.org/dist/v11.10.0/node-v11.10.0-linux-x64.tar.xz" | sudo tar --strip-components=2 -xJ -C /usr/local/bin/ node-v11.10.0-linux-x64/bin/node
-            curl https://www.npmjs.com/install.sh | sudo bash
-      - run:
-          name: Check current version of node
-          command: node -v
-
-
       - run:
           name: Install dependencies 
           command: npm install
@@ -32,10 +19,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - run:
-          name: Install dependencies 
-          command: npm run postinstall
-
+     
       - run:  
           command: ./startwebserver.sh
           background: true
@@ -45,7 +29,6 @@ jobs:
           command: |
               wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 10 http://localhost:8080
      
-      
       - run:
           name: Run test  
           command: npm run test
@@ -64,10 +47,18 @@ jobs:
             - package.json
 
 orbs:
-  aws-s3: circleci/aws-s3@2.0.0
+  aws-s3: circleci/aws-s3@3.0.0
+  build-tools: circleci/build-tools@3.0.0
 
 workflows:
   version: 2
   integrationtest:
     jobs:
-      - integrationtest
+      - integrationtest:
+            context:
+              - CIRCLE_CI_AWS_IAM
+            filters:
+              branches:
+                only:
+                  - master
+                  - /circleci-.*/
