@@ -39,7 +39,7 @@ jobs:
      
       - run:
           name: Run test  
-          command: npm run test:stage
+          command: npm run test:${ENVIRONMENT}
      
       - store_test_results:
           path: target
