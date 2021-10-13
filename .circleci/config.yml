@@ -3,6 +3,14 @@ jobs:
   integrationtest:
     docker:
       - image: timbru31/java-node:latest
+
+    parameters:
+      env:
+        type: enum
+        enum: ['stage', 'preprod']
+        default: 'stage'
+    environment:
+      ENVIRONMENT: << parameters.env >>
     working_directory: ~/repo
     steps:
       - build-tools/install-ci-tools
@@ -31,7 +39,7 @@ jobs:
      
       - run:
           name: Run test  
-          command: npm run test
+          command: npm run test:stage
      
       - store_test_results:
           path: target

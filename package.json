@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "serenity-bdd update",
     "clean": "rimraf target",
-    "test": "failsafe clean test:execute test:report",
+    "test:stage": "NODE_ENV=stage failsafe clean test:execute test:report",
+    "test:prod": "NODE_ENV=prod failsafe clean test:execute test:report",
     "test:execute": "cucumber-js --tags='@test'",
     "test:report": "serenity-bdd run --features ./features",
     "lint": "eslint --ext ts --config .eslintrc.js .",
