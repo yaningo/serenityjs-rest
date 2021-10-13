@@ -34,8 +34,7 @@ jobs:
 
       - run:
           shell: /bin/sh
-          command: |
-              wget --retry-connrefused --waitretry=1 --retry-on-http-error=500 --read-timeout=150 --timeout=150 -t 150 http://localhost:8080 
+          command: sleep 500 
      
       - run:
           name: Run test  
