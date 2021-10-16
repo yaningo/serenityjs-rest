@@ -2,8 +2,8 @@ version: 2.1
 jobs:
   integrationtest:
     docker:
-     - image: timbru31/java-node:latest
-
+    # CircleCI's next-gen convenience image for openJDK + Node installed
+      - image: cimg/openjdk:11.0-node
     parameters:
       env:
         type: enum
@@ -32,7 +32,7 @@ jobs:
             - v1-dependencies-
       - run:
           name: Install dependencies 
-          command: npm install
+          command: yarn
       
       - save_cache:
           key: v1-dependencies-{{ checksum "package.json" }}
@@ -41,7 +41,7 @@ jobs:
      
       - run:
           name: Run test 
-          command: npm run test:${ENVIRONMENT}
+          command: yarn test:${ENVIRONMENT}
      
       - store_test_results:
           path: target
