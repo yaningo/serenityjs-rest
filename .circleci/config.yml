@@ -2,7 +2,8 @@ version: 2.1
 jobs:
   integrationtest:
     docker:
-      - image: timbru31/java-node:latest
+    # CircleCI's next-gen convenience image for openJDK + Node installed
+      - image: cimg/openjdk:11.0-node
 
     parameters:
       env:
@@ -33,11 +34,14 @@ jobs:
           background: true
 
       - run:
-          shell: /bin/sh
-          command: sleep 500 
+          name: Run server and confirm application is up
+          command: |
+            sh ./startwebserver.sh &
+            dockerize -wait http://127.0.0.1:8080 -timeout 20s
+
      
       - run:
-          name: Run test  
+          name: Run test 
           command: npm run test:${ENVIRONMENT}
      
       - store_test_results:
