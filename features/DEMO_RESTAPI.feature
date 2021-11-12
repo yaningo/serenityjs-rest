@@ -1,5 +1,5 @@
 Feature: DEMO_RESTAPI
-  In order to perform CRUD on message 
+  In order to perform CRUD operation on message 
     As a API developer James
     James wants to create, update, get, delete a new message
 
