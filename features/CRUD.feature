@@ -16,7 +16,7 @@ Feature: CRUD on message
       | author | message | 
       | "Curry Blake" | "Speaking in tongue" | 
      
-
+@test
   Scenario: get a single message 
     In order to get a single message
     As a API developer James

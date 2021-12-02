@@ -11,8 +11,6 @@ export const ToPerform = {
     
     ),
     
-    
-    
 
     deleteMessage: (message: string) =>
     Task.where(`#actor delete message ${ message }`,

@@ -26,18 +26,24 @@ jobs:
             sh ./startwebserver.sh &
             dockerize -wait http://127.0.0.1:8080 -timeout 20s
 
-      # - restore_cache:
-      #     keys:
-      #       - v1-dependencies-{{ checksum "package.json" }}
-      #       - v1-dependencies-
+      - run:
+              name: Check if the server is up
+              command: |
+                      journalctl -u tomcat9.service
+                      background: true
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run:
           name: Install dependencies 
           command: yarn
       
-      # - save_cache:
-      #     key: v1-dependencies-{{ checksum "package.json" }}
-      #     paths:
-      #       - node_modules
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
      
       - run:
           name: Run test 
