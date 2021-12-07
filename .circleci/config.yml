@@ -27,10 +27,9 @@ jobs:
             dockerize -wait http://127.0.0.1:8080 -timeout 20s
 
       - run:
-              name: Check if the server is up
-              command: |
-                      journalctl -u tomcat9.service
-                      background: true
+          name: Check if the server is up
+          command: journalctl -u tomcat9.service
+          background: true
 
       - restore_cache:
           keys:
