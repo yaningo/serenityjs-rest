@@ -21,10 +21,8 @@ jobs:
           background: true
 
       - run:
-          name: Run server and confirm application is up
-          command: |
-            sh ./startwebserver.sh &
-            dockerize -wait http://127.0.0.1:8080 -timeout 20s
+          name: Check service is running
+          command: dockerize -wait http://127.0.0.1:8080 -timeout 20s
 
       - run:
           name: Check if the server is up
