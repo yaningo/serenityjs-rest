@@ -14,11 +14,12 @@ jobs:
     working_directory: ~/repo
     steps:
       - build-tools/install-ci-tools
-      - checkout    
+      - checkout
+      - run: chmod 744 ./startwebserver.sh
       
       - run:  
           command: |
-              sudo ./startwebserver.sh
+              ./startwebserver.sh
           background: true
                     
       - run:
