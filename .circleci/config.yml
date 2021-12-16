@@ -17,7 +17,7 @@ jobs:
       - checkout
       
       - run:  
-          command: ./apache-tomcat-9.0.37/bin/startup.sh
+          command: ./apache-tomcat-9.0.37/bin/startup.sh &
           background: true
                     
       - run:
