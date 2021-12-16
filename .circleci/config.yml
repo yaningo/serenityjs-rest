@@ -67,11 +67,4 @@ workflows:
   version: 2
   integrationtest:
     jobs:
-      - integrationtest:
-            context:
-              - CIRCLE_CI_AWS_IAM
-            filters:
-              branches:
-                only:
-                  - master
-                  - /circleci-.*/
+      - integrationtest
