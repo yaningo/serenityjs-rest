@@ -18,13 +18,9 @@ jobs:
       
       - run:  
           command: |
-              ./apache-tomcat-9.0.37/bin/startup.sh &
+              sudo ./startwebserver.sh
           background: true
-          
-      - run:  
-          command: |
-              cp webapp.war ./apache-tomcat-9.0.37/webapps
-
+                    
       - run:
           name: Check service is running
           command: dockerize -wait http://127.0.0.1:8080 -timeout 20s
