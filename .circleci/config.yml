@@ -24,7 +24,7 @@ jobs:
                     
       - run:
           name: Check service is running
-          command: dockerize -wait http://127.0.0.1:8080 -timeout 20s
+          command: dockerize -wait http://127.0.0.1:8000 -timeout 20s
 
       - run:
           name: Check if the server is up
