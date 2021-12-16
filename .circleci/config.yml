@@ -15,11 +15,9 @@ jobs:
     steps:
       - build-tools/install-ci-tools
       - checkout
-      - run: chmod 744 ./startwebserver.sh
       
       - run:  
-          command: |
-              ./startwebserver.sh
+          command: ./startwebserver.sh
           background: true
                     
       - run:
