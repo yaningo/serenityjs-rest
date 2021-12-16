@@ -18,9 +18,12 @@ jobs:
       
       - run:  
           command: |
-              ./apache-tomcat-9.0.37/bin/startup.sh
-              cp webapp.war ./apache-tomcat-9.0.37/webapps
+              ./apache-tomcat-9.0.37/bin/startup.sh &
           background: true
+          
+      - run:  
+          command: |
+              cp webapp.war ./apache-tomcat-9.0.37/webapps
 
       - run:
           name: Check service is running
